@@ -1,4 +1,5 @@
-from PyQt5 import QtWidgets, QtCore, QtGui # Added QtGui for QFont
+from PyQt5 import QtWidgets, QtCore, QtGui
+import webbrowser # NEW: Import the webbrowser module
 
 # IMPORTANT: The class name below now correctly matches the main UI class
 # generated in your sidebar_ui.py file, which is Ui_MainWindow.
@@ -9,6 +10,9 @@ class SidebarUiForm(QtWidgets.QWidget):
     Wrapper class for your sidebar_ui.py (the dashboard UI).
     This class correctly embeds the content of a QMainWindow-designed UI.
     """
+    # Define signals to communicate with MainWindow for logout
+    logout_requested = QtCore.pyqtSignal()
+
     def __init__(self):
         super().__init__()
         print("SidebarUiForm: Initializing...") # Debug print
@@ -17,28 +21,22 @@ class SidebarUiForm(QtWidgets.QWidget):
         self.ui = Ui_MainWindow()
 
         # Create a temporary QMainWindow instance to set up the UI on.
-        # This allows Ui_MainWindow.setupUi to correctly build its internal structure,
-        # including its central widget, as it was designed for a QMainWindow.
         temp_main_window = QtWidgets.QMainWindow()
         try:
             self.ui.setupUi(temp_main_window)
             print("SidebarUiForm: setupUi successful on temporary QMainWindow.") # Debug print
         except Exception as e:
             print(f"SidebarUiForm: Error during setupUi on temporary QMainWindow: {e}") # Debug print for errors
-            # Fallback in case of setupUi failure, though this shouldn't happen with correct Ui_MainWindow
             layout = QtWidgets.QVBoxLayout(self)
             layout.addWidget(QtWidgets.QLabel("Error loading sidebar UI. Check console."))
             self.setLayout(layout)
             return
 
         # Extract the central widget from the temporary QMainWindow.
-        # This central widget contains all the actual visual elements of your dashboard.
         dashboard_content_widget = temp_main_window.centralWidget()
 
         if dashboard_content_widget:
             # Reparent the central widget to this SidebarUiForm.
-            # This is important to ensure it's part of the correct widget hierarchy
-            # and will be displayed when SidebarUiForm is shown.
             dashboard_content_widget.setParent(self)
 
             # Set the layout of this SidebarUiForm (which is a QWidget)
@@ -56,13 +54,10 @@ class SidebarUiForm(QtWidgets.QWidget):
 
 
         # Ensure the temporary QMainWindow is deleted to free up resources.
-        # This is safe to do after its central widget has been reparented.
         temp_main_window.deleteLater()
         print("SidebarUiForm: Temporary QMainWindow deleted.") # Debug print
 
-        # --- NEW: Apply a stylesheet to ensure text visibility ---
-        # This sets a default dark text color for all QLabels and QPushButtons
-        # within this SidebarUiForm, overriding any default light colors.
+        # Apply a stylesheet to ensure text visibility AND adjust header position
         self.setStyleSheet("""
             QLabel {
                 color: #333333; /* Dark gray for labels */
@@ -73,17 +68,69 @@ class SidebarUiForm(QtWidgets.QWidget):
             QLineEdit {
                 color: #333333; /* Dark gray for line edit text */
             }
-            /* You can add more specific styling here if needed */
+
+            /* --- Header Positioning Adjustments --- */
+            /* Target the main widget holding the header content (widget_3) */
+            #widget_3 {
+                padding-top: 0px;
+                margin-top: 0px;
+            }
+            /* Target the horizontal widget inside widget_3 that contains header elements */
+            #widget { /* This is the widget with horizontalLayout_4 in your sidebar_ui.py */
+                padding-top: 0px;
+                margin-top: 0px;
+                min-height: 40px; /* Ensure it has a minimum height to display content */
+                max-height: 50px; /* Optional: cap maximum height */
+            }
+            /* Adjust spacing of the horizontal layout itself if needed */
+            #widget > QHBoxLayout { /* This targets the layout directly */
+                spacing: 0px;
+                margin: 0px;
+                padding: 0px;
+            }
         """)
-        print("SidebarUiForm: Applied stylesheet for text visibility.") # Debug print
+        print("SidebarUiForm: Applied stylesheet for text visibility and header positioning.") # Debug print
 
+        # Connect sidebar buttons to internal stackedWidget pages
+        self.ui.home_btn_1.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(0)) # Home Page (page)
+        self.ui.home_btn_2.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(0))
 
-        # You can add any specific logic, signal connections, or initializations
-        # for your dashboard/sidebar here, referencing self.ui.
-        # For example, if you have a button named 'home_btn_1' in your sidebar_ui.py:
-        # self.ui.home_btn_1.clicked.connect(self.handle_home_button_click)
+        # Connect Profile button (user_btn) to Profile Page (page_7) at index 1
+        self.ui.user_btn.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(1))
 
-    # Example method for a button click (uncomment and adapt if needed)
-    # def handle_home_button_click(self):
-    #     print("Home button on sidebar clicked!")
-    #     # You might emit a signal here to tell MainWindow to change page, etc.
+        self.ui.flash_btn_1.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(2)) # Flashcard Page (page_2)
+        self.ui.flash_btn_2.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(2))
+
+        self.ui.quizze_btn_1.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(3)) # Quizze Page (page_3)
+        self.ui.quizze_btn_2.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(3))
+
+        self.ui.about_btn_1.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(4)) # About us Page (page_4)
+        self.ui.about_btn_2.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(4))
+
+        self.ui.setting_1.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(5)) # Settings Page (page_5)
+        self.ui.setting_2.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(5))
+
+        # Connect Search button (search_btn) to Search Page (page_6) at index 6
+        self.ui.search_btn.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(6))
+
+        # --- NEW: Connect search button to open Google search ---
+        self.ui.search_btn.clicked.connect(self.perform_google_search)
+        self.ui.search_input.returnPressed.connect(self.perform_google_search) # Also search on Enter key press
+
+        # Connect logout buttons to emit logout_requested signal with debug print
+        self.ui.logout_btn_1.clicked.connect(lambda: (print("Logout btn 1 clicked. Emitting logout_requested."), self.logout_requested.emit()))
+        self.ui.logout_btn_2.clicked.connect(lambda: (print("Logout btn 2 clicked. Emitting logout_requested."), self.logout_requested.emit()))
+
+        print("SidebarUiForm: Button signals connected.") # Debug print
+
+    # --- NEW: Method to perform Google search ---
+    def perform_google_search(self):
+        search_query = self.ui.search_input.text().strip()
+        if search_query:
+            google_url = f"https://www.google.com/search?q={search_query}"
+            webbrowser.open(google_url)
+            print(f"Opened Google search for: {search_query}")
+        else:
+            print("Search input is empty.")
+            QtWidgets.QMessageBox.information(self, "Search", "Please enter a search query.")
+        self.ui.search_input.clear() # Clear the search input after searching

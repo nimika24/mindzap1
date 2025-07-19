@@ -76,6 +76,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.main_app_dashboard = SidebarUiForm() # Use your custom dashboard wrapper
         self.stacked_widget.addWidget(self.main_app_dashboard)
         print(f"Added Main App Dashboard (SidebarUiForm) to stacked widget. Index: {self.stacked_widget.indexOf(self.main_app_dashboard)}") # Debug
+        # --- NEW: Connect logout signal from sidebar to MainWindow's logout handler ---
+        try:
+            self.main_app_dashboard.logout_requested.connect(self.handle_logout)
+            print("MainWindow: Connected main_app_dashboard.logout_requested to handle_logout.") # Debug
+        except AttributeError as e:
+            print(f"MainWindow: Error connecting logout_requested signal: {e}. Is SidebarUiForm correctly defined?") # Debug
 
 
         # Set the initial page to the enter screen
@@ -239,6 +245,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stacked_widget.setCurrentWidget(self.main_app_dashboard)
         self.setWindowTitle(f"MindZap - Dashboard ({email})")
         print(f"After setting current widget. Current widget: {self.stacked_widget.currentWidget().__class__.__name__}") # Debug
+
+    # --- NEW: Logout handler ---
+    def handle_logout(self):
+        print("Logout requested. Returning to Enter Page.") # Debug
+        QtWidgets.QMessageBox.information(self, "Logout", "You have been logged out.")
+        self.show_enter_page()
 
 
 if __name__ == "__main__":

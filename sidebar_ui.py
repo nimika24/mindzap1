@@ -21,6 +21,16 @@ class Ui_MainWindow(object):
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName("gridLayout")
+
+        # Set Column Stretches for the main gridLayout
+        # Column 0 (icon_only_widget): Small stretch, e.g., 1
+        # Column 1 (full_mwnu_widget): Medium stretch, e.g., 2 (or 0 if it's hidden by default)
+        # Column 2 (widget_3, contains stackedWidget): Large stretch, e.g., 10
+        self.gridLayout.setColumnStretch(0, 1)
+        self.gridLayout.setColumnStretch(1, 2) # Adjust this if full_mwnu_widget is usually hidden
+        self.gridLayout.setColumnStretch(2, 10) # Give the main content area most of the space
+
+
         self.icon_only_widget = QtWidgets.QWidget(self.centralwidget)
         self.icon_only_widget.setObjectName("icon_only_widget")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.icon_only_widget)

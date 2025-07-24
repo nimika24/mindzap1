@@ -16,7 +16,6 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(626, 708)
         icon = QtGui.QIcon()
-        # Ensure this path is correct and the image exists
         icon.addPixmap(QtGui.QPixmap("../../../../Users/DELL/Desktop/craps/qz.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet("QToolBox::tab,\n"
@@ -83,13 +82,13 @@ class Ui_MainWindow(object):
         self.toolBox.setGeometry(QtCore.QRect(20, 100, 581, 531))
         self.toolBox.setObjectName("toolBox")
         self.widget = QtWidgets.QWidget()
-        self.widget.setGeometry(QtCore.QRect(0, 0, 581, 461))
+        self.widget.setGeometry(QtCore.QRect(0, 0, 581, 471))
         self.widget.setObjectName("widget")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.widget)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.db_frame = QtWidgets.QFrame(self.widget)
-        self.db_frame.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected: QtWidgets.QFrame.StyledPanel
-        self.db_frame.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected: QtWidgets.QFrame.Raised
+        self.db_frame.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected
+        self.db_frame.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected
         self.db_frame.setObjectName("db_frame")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.db_frame)
         self.gridLayout_4.setObjectName("gridLayout_4")
@@ -105,6 +104,20 @@ class Ui_MainWindow(object):
         self.spinBox_2.setObjectName("spinBox_2")
         self.horizontalLayout_2.addWidget(self.spinBox_2)
         self.gridLayout_4.addLayout(self.horizontalLayout_2, 0, 0, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(20, 289, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_4.addItem(spacerItem, 4, 0, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 140, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_4.addItem(spacerItem1, 2, 0, 1, 1)
+        self.frame_2 = QtWidgets.QFrame(self.db_frame)
+        self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected
+        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected
+        self.frame_2.setObjectName("frame_2")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.frame_2)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.pushButton_4 = QtWidgets.QPushButton(self.frame_2)
+        self.pushButton_4.setObjectName("pushButton_4")
+        self.gridLayout_2.addWidget(self.pushButton_4, 0, 0, 1, 1) # Removed 'i'
+        self.gridLayout_4.addWidget(self.frame_2, 3, 0, 1, 1)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.label_11 = QtWidgets.QLabel(self.db_frame)
@@ -114,70 +127,44 @@ class Ui_MainWindow(object):
         self.comboBox_6.setObjectName("comboBox_6")
         self.horizontalLayout_4.addWidget(self.comboBox_6)
         self.gridLayout_4.addLayout(self.horizontalLayout_4, 1, 0, 1, 1)
-
-        # Removed the problematic fixed-size spacers and adjusted row index
-        self.frame_2 = QtWidgets.QFrame(self.db_frame)
-        self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected: QtWidgets.QFrame.StyledPanel
-        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected: QtWidgets.QFrame.Raised
-        self.frame_2.setObjectName("frame_2")
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.frame_2)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-        self.pushButton_4 = QtWidgets.QPushButton(self.frame_2)
-        self.pushButton_4.setObjectName("pushButton_4")
-        self.gridLayout_2.addWidget(self.pushButton_4, 0, 0, 1, 1)
-        # Changed row index for frame_2 to 2, as the previous spacer at row 2 is removed
-        self.gridLayout_4.addWidget(self.frame_2, 2, 0, 1, 1)
-
-        # ADDED: An expanding vertical spacer to push content to the top if needed
-        # This replaces the large fixed spacers removed from the .ui
-        self.gridLayout_4.addItem(QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding), 3, 0, 1, 1)
-
-        # Set row stretches for gridLayout_4 to ensure rows expand
-        # Give content rows a small stretch (e.g., 1) and the spacer a larger stretch (e.g., 10)
-        # This ensures content is visible and the spacer takes up remaining space.
-        self.gridLayout_4.setRowStretch(0, 1) # For "Number of Questions"
-        self.gridLayout_4.setRowStretch(1, 1) # For "Select Category"
-        self.gridLayout_4.setRowStretch(2, 1) # For "Get New Question" button
-        self.gridLayout_4.setRowStretch(3, 10) # This is the new spacer, let it expand significantly
-
-
         self.gridLayout_3.addWidget(self.db_frame, 0, 0, 1, 1)
         self.toolBox.addItem(self.widget, "")
         self.page_2 = QtWidgets.QWidget()
-        self.page_2.setGeometry(QtCore.QRect(0, 0, 551, 421))
+        self.page_2.setGeometry(QtCore.QRect(0, 0, 581, 471))
         self.page_2.setObjectName("page_2")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.page_2)
         self.gridLayout_5.setObjectName("gridLayout_5")
         self.question_frame = QtWidgets.QFrame(self.page_2)
-        self.question_frame.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected: QtWidgets.QFrame.StyledPanel
-        self.question_frame.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected: QtWidgets.QFrame.Raised
+        self.question_frame.setFrameShape(QtWidgets.QFrame.NoFrame) # Corrected
+        self.question_frame.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected
         self.question_frame.setObjectName("question_frame")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.question_frame)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.info_frame = QtWidgets.QFrame(self.question_frame)
-        self.info_frame.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected: QtWidgets.QFrame.StyledPanel
-        self.info_frame.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected: QtWidgets.QFrame.Raised
+        self.info_frame.setFrameShape(QtWidgets.QFrame.NoFrame) # Corrected
+        self.info_frame.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected
         self.info_frame.setObjectName("info_frame")
         self.question_count_label = QtWidgets.QLabel(self.info_frame)
         self.question_count_label.setGeometry(QtCore.QRect(725, 12, 38, 20))
-        self.question_count_label.setAlignment(QtCore.Qt.AlignCenter) # Corrected: QtCore.Qt.AlignCenter
+        self.question_count_label.setAlignment(QtCore.Qt.AlignCenter) # Corrected
         self.question_count_label.setObjectName("question_count_label")
-        self.widget1 = QtWidgets.QWidget(self.info_frame)
-        self.widget1.setObjectName("widget1")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget1)
+        self.layoutWidget = QtWidgets.QWidget(self.info_frame)
+        self.layoutWidget.setGeometry(QtCore.QRect(0, 0, 106, 30))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.layoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setSpacing(2)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label_7 = QtWidgets.QLabel(self.widget1)
+        self.label_7 = QtWidgets.QLabel(self.layoutWidget)
         self.label_7.setObjectName("label_7")
         self.horizontalLayout.addWidget(self.label_7)
-        self.lineEdit = QtWidgets.QLineEdit(self.widget1)
+        self.lineEdit = QtWidgets.QLineEdit(self.layoutWidget)
         self.lineEdit.setObjectName("lineEdit")
         self.horizontalLayout.addWidget(self.lineEdit)
         self.verticalLayout_3.addWidget(self.info_frame)
         self.questions_frame = QtWidgets.QFrame(self.question_frame)
-        self.questions_frame.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected: QtWidgets.QFrame.StyledPanel
-        self.questions_frame.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected: QtWidgets.QFrame.Raised
+        self.questions_frame.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected
+        self.questions_frame.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected
         self.questions_frame.setObjectName("questions_frame")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.questions_frame)
         self.verticalLayout_2.setSpacing(0)
@@ -189,7 +176,7 @@ class Ui_MainWindow(object):
         self.plainTextEdit.setObjectName("plainTextEdit")
         self.verticalLayout_2.addWidget(self.plainTextEdit)
         self.answer_frame = QtWidgets.QFrame(self.questions_frame)
-        self.answer_frame.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected: QtWidgets.QFrame.StyledPanel
+        self.answer_frame.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected
         self.answer_frame.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected
         self.answer_frame.setObjectName("answer_frame")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.answer_frame)
@@ -197,6 +184,12 @@ class Ui_MainWindow(object):
         self.radioButton = QtWidgets.QRadioButton(self.answer_frame)
         self.radioButton.setObjectName("radioButton")
         self.verticalLayout.addWidget(self.radioButton)
+        self.radioButton_3 = QtWidgets.QRadioButton(self.answer_frame)
+        self.radioButton_3.setObjectName("radioButton_3")
+        self.verticalLayout.addWidget(self.radioButton_3)
+        self.radioButton_4 = QtWidgets.QRadioButton(self.answer_frame)
+        self.radioButton_4.setObjectName("radioButton_4")
+        self.verticalLayout.addWidget(self.radioButton_4)
         self.radioButton_2 = QtWidgets.QRadioButton(self.answer_frame)
         self.radioButton_2.setObjectName("radioButton_2")
         self.verticalLayout.addWidget(self.radioButton_2)
@@ -205,8 +198,8 @@ class Ui_MainWindow(object):
         spacerItem2 = QtWidgets.QSpacerItem(20, 51, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_3.addItem(spacerItem2)
         self.function_frame = QtWidgets.QFrame(self.question_frame)
-        self.function_frame.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected: QtWidgets.QFrame.StyledPanel
-        self.function_frame.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected: QtWidgets.QFrame.Raised
+        self.function_frame.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected
+        self.function_frame.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected
         self.function_frame.setObjectName("function_frame")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.function_frame)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
@@ -224,8 +217,8 @@ class Ui_MainWindow(object):
         self.toolBox.addItem(self.page_2, "")
         self.frame = QtWidgets.QFrame(self.centralwidget)
         self.frame.setGeometry(QtCore.QRect(20, 10, 591, 70))
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected: QtWidgets.QFrame.StyledPanel
-        self.frame.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected: QtWidgets.QFrame.Raised
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel) # Corrected
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised) # Corrected
         self.frame.setObjectName("frame")
         self.gridLayout = QtWidgets.QGridLayout(self.frame)
         self.gridLayout.setObjectName("gridLayout")
@@ -249,7 +242,7 @@ class Ui_MainWindow(object):
         self.gridLayout.addItem(spacerItem4, 0, 3, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 626, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 626, 33))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -257,20 +250,22 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.toolBox.setCurrentIndex(0)
+        self.toolBox.setCurrentIndex(0) # Corrected: Set to 0 for Settings page
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Quiz"))
         self.label_14.setText(_translate("MainWindow", "Number of Questions"))
-        self.label_11.setText(_translate("MainWindow", "Select Category"))
         self.pushButton_4.setText(_translate("MainWindow", "Get New Question"))
+        self.label_11.setText(_translate("MainWindow", "Select Category"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.widget), _translate("MainWindow", "Settings"))
         self.question_count_label.setText(_translate("MainWindow", "10/20"))
         self.label_7.setText(_translate("MainWindow", "Category"))
         self.label_10.setText(_translate("MainWindow", "Questions:"))
         self.radioButton.setText(_translate("MainWindow", "RadioButton"))
+        self.radioButton_3.setText(_translate("MainWindow", "RadioButton"))
+        self.radioButton_4.setText(_translate("MainWindow", "RadioButton"))
         self.radioButton_2.setText(_translate("MainWindow", "RadioButton"))
         self.pushButton.setText(_translate("MainWindow", "Try Again"))
         self.pushButton_2.setText(_translate("MainWindow", "Check"))

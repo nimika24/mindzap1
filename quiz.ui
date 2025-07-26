@@ -96,7 +96,7 @@ QPushButton {
        <x>0</x>
        <y>0</y>
        <width>581</width>
-       <height>471</height>
+       <height>461</height>
       </rect>
      </property>
      <attribute name="label">
@@ -203,7 +203,7 @@ QPushButton {
        <x>0</x>
        <y>0</y>
        <width>581</width>
-       <height>471</height>
+       <height>461</height>
       </rect>
      </property>
      <attribute name="label">
@@ -219,32 +219,6 @@ QPushButton {
          <enum>QFrame::Shadow::Raised</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QFrame" name="info_frame">
-           <property name="frameShape">
-            <enum>QFrame::Shape::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Shadow::Raised</enum>
-           </property>
-           <widget class="QLabel" name="question_count_label">
-            <property name="geometry">
-             <rect>
-              <x>725</x>
-              <y>12</y>
-              <width>38</width>
-              <height>20</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>10/20</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-          </widget>
-         </item>
          <item>
           <widget class="QFrame" name="questions_frame">
            <property name="frameShape">
@@ -284,6 +258,13 @@ QPushButton {
                 </widget>
                </item>
                <item>
+                <widget class="QRadioButton" name="radioButton_2">
+                 <property name="text">
+                  <string>RadioButton</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QRadioButton" name="radioButton_3">
                  <property name="text">
                   <string>RadioButton</string>
@@ -292,13 +273,6 @@ QPushButton {
                </item>
                <item>
                 <widget class="QRadioButton" name="radioButton_4">
-                 <property name="text">
-                  <string>RadioButton</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="radioButton_2">
                  <property name="text">
                   <string>RadioButton</string>
                  </property>
@@ -445,7 +419,7 @@ QPushButton {
      <x>0</x>
      <y>0</y>
      <width>626</width>
-     <height>33</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
